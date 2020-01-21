@@ -27,7 +27,7 @@ public class MathApplicationTester {
 
         //test the add functionality
         Assert.assertEquals(calcService.add(10.0,20.0),30.0,0);
-
+        //Test commit
         //verify the behavior
         //verify(calcService).add(20.0, 30.0);
     }
