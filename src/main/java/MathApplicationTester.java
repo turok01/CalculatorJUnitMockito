@@ -26,9 +26,11 @@ public class MathApplicationTester {
         when(calcService.add(10.0,20.0)).thenReturn(30.00);
 
         //test the add functionality
+        // assert that calcService.add(10,20) Equals 30
         Assert.assertEquals(calcService.add(10.0,20.0),30.0,0);
-        //Test commit
+
         //verify the behavior
-        //verify(calcService).add(20.0, 30.0);
+        //verify that call mock method with arguments 10 and 20
+        verify(calcService).add(10.0, 20.0);
     }
 }
