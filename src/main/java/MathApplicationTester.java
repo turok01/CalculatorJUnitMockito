@@ -39,10 +39,12 @@ public class MathApplicationTester {
         //add the behavior of calc service to divide two numbers
         when(calcService.divide(20.0,10.0)).thenReturn(2.00);
 
+
+
         //test the add functionality
         // assert that calcService.add(10,20) Equals 30
         Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
-        Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
+        //Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
         //Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
 
         //test the subtract functionality
@@ -67,7 +69,7 @@ public class MathApplicationTester {
         InOrder orderVerifier = inOrder(calcService);
 
         //orderVerifier.verify(calcService).add(10.0,20.0);
-        orderVerifier.verify((calcService).add(10.0,20.0), Mockito.times(3));
+        orderVerifier.verify(calcService).add(10.0,20.0);
         //orderVerifier.verify(calcService).add(10.0,20.0);
         orderVerifier.verify(calcService).subtract(20.0,10.0);
         orderVerifier.verify(calcService).divide(20.0,10.0);
