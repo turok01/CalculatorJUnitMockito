@@ -16,7 +16,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.reset;
 
 //@runWith attaches a runner with the test class to initialize the test data
 //To process annotations, we can use the built-in runner MockitoJUnitRunner
@@ -27,33 +27,24 @@ public class MathApplicationTester {
     @Before
     public void setUp(){
         mathApplication = new MathApplication();
-        Calculator calculator = new Calculator();
-        calcService = spy(calculator);
+        calcService = mock(CalculatorService.class);
         mathApplication.setCalculatorService(calcService);
     }
     @Test
     public void testAdd(){
+        //add the behavior to add number
+        when(calcService.add(10.0,20.0)).thenReturn(30.0);
+
         //perform operation on real object
         // test the add functionality
         // assert that calcService.add(10,20) Equals 30
         Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
-    }
-    class Calculator implements CalculatorService{
-        @Override
-        public double add(double input1, double input2){
-            return input1 + input2;
-        }
-        @Override
-        public double subtract(double input1, double input2){
-            throw new UnsupportedOperationException("Method not implemented yet!");
-        }
-        @Override
-        public double multiply(double input1, double input2){
-            throw new UnsupportedOperationException("Method not implemented yet!");
-        }
-        @Override
-        public double divide(double input1, double input2){
-            throw new UnsupportedOperationException("Method not implemented yet!");
-        }
+
+        //reset the mock
+        reset(calcService);
+
+        // test the add functionality after resetting the mock
+        Assert.assertEquals(mathApplication.add(10.0,20.0),30.0,0);
+
     }
 }
