@@ -17,6 +17,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
 
 
 
@@ -33,14 +34,26 @@ public class MathApplicationTester {
         mathApplication.setCalculatorService(calcService);
     }
     @Test
-    public void testAdd(){
-        //Given
-        given(calcService.add(10.0,20.0)).willReturn(30.0);
+    public void testAddAndSubtract(){
+        //add the behavior to add number
+        when(calcService.add(20.0,10.0)).thenReturn(30.0);
 
-        //when
-        double result =calcService.add(10.0,20.0);
+        //add the behavior to subtract number
+        when(calcService.subtract(20.0,10.0)).thenReturn(30.0);
 
-        //then
-        Assert.assertEquals(result,30.0,0);
+        //test the subtract functionality
+        Assert.assertEquals(mathApplication.subtract(20.0,10.0),30.0,0);
+
+        //test the add functionality
+        Assert.assertEquals(mathApplication.add(20.0,10.0),30.0,0);
+
+        //verify call to add method to be completed within 100ms
+        verify(calcService,timeout(100)).add(20.0,10.0);
+
+        //invocation count can be added to ensure multiplication invocations
+        //can be checked within given timeframe
+        verify(calcService,timeout(100).times(1)).subtract(20.0,10.0);
+
+
     }
 }
